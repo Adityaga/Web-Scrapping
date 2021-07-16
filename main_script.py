@@ -60,13 +60,13 @@ def findTable2(page):
 def findTable3(page):
     soup=BeautifulSoup( page,'lxml')
     table_html=soup.find("table",{'id':'resultTab6'})
-    txt=table_html.find_all('tr')
+    rows=table_html.find_all('tr')
 # print(txt)
     list1=[]
     dct={}
     
     # print(len(txt.text[]))
-    for i in txt:  
+    for i in rows:  
     #     print(i.text)
         row=i.text
         k=row.split('\n')
@@ -102,16 +102,16 @@ def SearchOnline(CIN,collection):
     y=session.post(url=url,data=data,headers=headers)
     page=y.content
     # print(page)
-    print("before online search")
+    # print("before online search")
     table1=findTable1(page)
     table2=findTable2(page)
-    print("Table 3 finding")
+    # print("Table 3 finding")
     table3=findTable3(page)
     print(table1)
     print(table2)
     print(table3)
     #storing in database
-    #data=StoreInDatabase(CIN,table1,table2,table3,collection)
+    data=StoreInDatabase(CIN,table1,table2,table3,collection)
     return data
    
 def StoreInDatabase(CIN,table1,table2,table3,collection):
@@ -121,19 +121,19 @@ def StoreInDatabase(CIN,table1,table2,table3,collection):
     return dictionary
 
 def TryDatabase(CIN,collection):
-    print("TryDatabase intiated")
+    # print("TryDatabase intiated")
     data=collection.find_one({'cin':CIN})
-    print("Try database end")
+    # print("Try database end")
     return data
 
 def CreateDatabase():
-    print("Create database initiated")
+    # print("Create database initiated")
     client=pymongo.MongoClient("mongodb://localhost:27017/")
-    print("successful")
-    print(client)
+    # print("successful")
+    # print(client)
     db=client['MCA_data']
     collection = db['Available_Data_of_MCA']
-    print("Create Databse end")
+    # print("Create Databse end")
     return collection
 
 if __name__== '__main__':
@@ -149,6 +149,6 @@ if __name__== '__main__':
             data=SearchOnline(CIN,collection)
         else:
             print("Available in Database")
-    #     print(data)
+        print(data)
     
 
