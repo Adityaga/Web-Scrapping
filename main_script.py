@@ -59,10 +59,10 @@ def findTable2(page):
     for j in range(1,lines):
         dct={}
         for i in range(0,length):
-            print(i)
+            # print(i)
             dct[list1[0][i]]=list1[1][i]
         table.append(dct)
-        
+
     return table
     
 def findTable3(page):
@@ -83,12 +83,21 @@ def findTable3(page):
         length=len(k)
         list1.append(k)
     #     print(j)
-    #     j+=1
-    for i in range(0,length):
-        dct[list1[0][i]]=list1[1][i]
-        
-    # print(list1)
-    return dct
+    #     j+=1  
+    for i in range(1,len(list1)):
+        list1[i].append('-')
+    
+    lst1=[]
+    for i in range(1,len(list1)):
+        dct={}
+        for j in range(0,len(list1[0])):
+            dct[list1[0][j]]=list1[i][j]
+#         print(lst[i][j],end='')
+#     print()
+    lst1.append(dct)
+    # print(dct)
+    # print(lst1)
+    return lst1
 
 
 def SearchOnline(CIN,collection):
@@ -151,10 +160,10 @@ if __name__== '__main__':
     if CIN==None:
         print('Entered ID is invalid')
     else :
-        print("Pls wait, while we are fetchimg your data")
+        # print("Pls wait, while we are fetchimg your data")
         data=TryDatabase(CIN,collection)
         if data==None:
-            print("inside if")
+            # print("inside if")
             data=SearchOnline(CIN,collection)
         else:
             print("Available in Database")
