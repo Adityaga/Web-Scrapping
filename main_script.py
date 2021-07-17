@@ -49,11 +49,19 @@ def findTable2(page):
         k=[x for x in k if x != '']
     #     print(type(k))
         length=len(k)
+        if(length==4):
+            k.insert(0,"-")
         list1.append(k)
     #     print(j)
 
-    for i in range(0,length):
-        table[list1[0][i]]=list1[1][i]
+    table=[]
+    lines=len(list1)
+    for j in range(1,lines):
+        dct={}
+        for i in range(0,length):
+            print(i)
+            dct[list1[0][i]]=list1[1][i]
+        table.append(dct)
         
     return table
     
@@ -107,10 +115,11 @@ def SearchOnline(CIN,collection):
     table2=findTable2(page)
     # print("Table 3 finding")
     table3=findTable3(page)
-    print(table1)
-    print(table2)
-    print(table3)
+    # print(table1)
+    # print(table2)
+    # print(table3)
     #storing in database
+    # table2=""
     data=StoreInDatabase(CIN,table1,table2,table3,collection)
     return data
    
