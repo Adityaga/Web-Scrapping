@@ -1,7 +1,3 @@
-# from main_script import *
-from Database import *
-from Online_Search import *
-
 
 def findTable1(soup):
     # soup=BeautifulSoup( page,'lxml')

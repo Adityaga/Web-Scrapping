@@ -1,14 +1,13 @@
-import requests
-from bs4 import BeautifulSoup
+# import requests
+# from bs4 import BeautifulSoup
 import re
 import pymongo
-from Data_fetching_functions import *
 from Database import TryDatabase
-from Online_Search import *
+from Online_Search import SearchOnline
 from typing import Mapping 
 import sys
 
-collection=""
+# collection=""
 #  -(U/L) -----(5 digits) --(char A-Z) ----(4 digits) ---(3 char(A-Z)) ------(6 digits)      CIN
 #2nd pattern     ---(char(A-Z)) -(hypen) ----(4 digits)        LLPIN 
 #3rd pattern    F -----(5 digits)    FCRN
@@ -27,22 +26,22 @@ def getCompanyId()  :
         return None
         
 
-# if __name__== '__main__':
+if __name__== '__main__':
     # global collection
 # CreateDatabase()
-argumentList = sys.argv
-CIN=getCompanyId()
-if CIN==None:
-    print('Entered ID is invalid')
-else :
-    data=TryDatabase(CIN)
-    if data==None:
-        data=SearchOnline(CIN)
-    if data==None:
-        data="Company data is not available"
-    else:
-        print("Available in Database")
-        
-    print(data)
+    argumentList = sys.argv
+    CIN=getCompanyId()
+    if CIN==None:
+        print('Entered ID is invalid')
+    else :
+        data=TryDatabase(CIN)
+        if data==None:
+            data=SearchOnline(CIN)
+        if data==None:
+            data="Company data is not available"
+        else:
+            print("Available in Database")
+            
+        print(data)
     
 

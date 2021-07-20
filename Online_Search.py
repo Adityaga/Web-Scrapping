@@ -1,7 +1,7 @@
-from main_script import *
-from Database import *
+from Database import StoreInDatabase
 import Data_fetching_functions
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
+import requests
 
 def SearchOnline(CIN):
     url='https://www.mca.gov.in/mcafoportal/companyLLPMasterData.do'
