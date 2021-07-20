@@ -1,4 +1,4 @@
-from main_script import *
+# from main_script import *
 from Database import *
 from Online_Search import *
 
@@ -23,7 +23,7 @@ def findTable2(soup,id='resultTab5'):
     table={} 
     txt=results.find_all('tr')
     tags=results.find_all('th')
-    row_data_html=[]
+    # row_data_html=[]
     table=[]
 
     # print(txt)
@@ -41,9 +41,6 @@ def findTable2(soup,id='resultTab5'):
         for i in range(0,len(tags)):
             dct[tags[i].text]=lst[i].text
         table.append(dct)
-
     # print(table)
     return table
     
-def findTable3(soup):
-    return findTable2(soup,'resultTab6')

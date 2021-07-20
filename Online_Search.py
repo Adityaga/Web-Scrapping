@@ -1,6 +1,7 @@
 from main_script import *
 from Database import *
 import Data_fetching_functions
+# from bs4 import BeautifulSoup
 
 def SearchOnline(CIN):
     url='https://www.mca.gov.in/mcafoportal/companyLLPMasterData.do'
@@ -28,7 +29,7 @@ def SearchOnline(CIN):
         return None
     table2=Data_fetching_functions.findTable2(soup)
     # print("Table 3 finding")
-    table3=Data_fetching_functions.findTable3(soup)
+    table3=Data_fetching_functions.findTable2(soup,'resultTab6')
     # print(table1)
     # print(table2)
     # print(table3)
