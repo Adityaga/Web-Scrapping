@@ -7,7 +7,7 @@ import sys
 from flask import Flask
 from flask.templating import render_template
 from flask_pymongo import PyMongo, pymongo
-from bson.json_util import dumps
+from bson.json_util import CANONICAL_JSON_OPTIONS, dumps
 from bson.objectid import ObjectId
 from flask import jsonify
 from flask import request
@@ -15,46 +15,40 @@ from flask import request
 app=Flask(__name__)
 app.config["MONGO_URI"]="mongodb://localhost:27017/MCA_data"
 mongo = PyMongo(app)
-# CIN=""
+data=""
 
 @app.route("/")
 def home_page():
-    return "<p>Hello!</p>"
-
-@app.route('/CIN/<id>')
-def user(id):
-    #id="U65999DL2016PLC304713"
-    print(type(id))
-    CIN=id
-    CIN=getCompanyId(id)
-    flag=1
-    if CIN==None:
-        print('Entered ID is invalid')
-    else :
-        data=TryDatabase(CIN)
-        if data==None:
-            data=SearchOnline(CIN)
-            print("hello ",data)
-        if data==None:
-            data="Company data is not available"
-        else:
-            print("Available in Database")
-            # flag=0
-        print(data)
-
-    # id="U74899DL1994PTC061340"
-    print(CIN)
-    print(type(CIN))
-    user=mongo.db.Available_Data_of_MCA.find_one({'cin':id})
-    response=dumps(user)
-    return response
-#collection=""
-#  -(U/L) -----(5 digits) --(char A-Z) ----(4 digits) ---(3 char(A-Z)) ------(6 digits)      CIN
-#2nd pattern     ---(char(A-Z)) -(hypen) ----(4 digits)        LLPIN 
-#3rd pattern    F -----(5 digits)    FCRN
+    return "HomePage"
 
 
-def getCompanyId(CIN)  :
+
+
+@app.route('/CIN',methods=['GET', 'POST'])
+def user():
+    if request.method == 'POST':
+        cin_num=request.form.get("name")
+        CIN=varifyCompanyId(cin_num)
+        if CIN==None:
+            return 'Entered ID is invalid'
+        else :
+            global data
+            data=TryDatabase(CIN)
+            if data==None:
+                data=SearchOnline(CIN)
+                print("hello ",data)
+            if data==None:
+                data="Company data is not available"
+            # print(data['Company/LLP Master Data'])
+            var1=data['Company/LLP Master Data']
+          
+            return render_template("Table1.html",rows=var1) 
+            # return jsonify(data)
+    return render_template("index.html")
+
+
+
+def varifyCompanyId(CIN)  :
     #re stands for regular expression and number is denoting type of re
     re1=r"^[UL][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$" 
     # re2=r"^L[0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$"
@@ -67,6 +61,29 @@ def getCompanyId(CIN)  :
         return CIN
     else:
         return None
+
+
+
+@app.route("/Table", methods=['GET','POST'])
+def Table2():
+    data2=data["Charges"]
+    return render_template("Table2.html",headings=data2[0],rows=data2)
+
+@app.route("/button", methods=['GET','POST'])    
+def button():
+    if request.method == 'POST':
+        global data
+        if request.form.get('action2'):
+            data2=data["Directors/Signatory Details"]
+            return render_template("Table2.html",headings=data2[0],rows=data2)
+        elif request.form.get('action1'):
+            var1=data['Company/LLP Master Data']
+            return render_template("Table1.html",rows=var1) 
+        
+            
+    
+    
+
 
 
 if __name__== '__main__':
