@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid rgb(58, 52, 52);
+          border-collapse: collapse;
+        }
+        </style>
+</head>
+<body>
+    <h2>Company/LLP Master Data</h2>
+    <table>
+            {% for row in table1 %}
+            <tr>
+                <td>{{row}}</td>
+                <td>{{table1[row]}}</td>
+            </tr>
+            {% endfor %}
+    </table>  
+    <h2>Charges</h2>
+    <table style="width: 100%">
+        <tr>
+            {% for header in headings2 %}
+                <th>{{header}}</th>
+            {% endfor %}
+        </tr>
+        
+        {% for row in table2 %}
+        <tr>
+            {% for cell in row %} 
+                <td>{{row[cell]}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Directors/Signatory Details</h2>
+    <table style="width: 100%">
+        <tr>
+            {% for header in headings3 %}
+                <th>{{header}}</th>
+            {% endfor %}
+        </tr>
+        
+        {% for row in table3 %}
+        <tr>
+            {% for cell in row %} 
+                <td>{{row[cell]}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- <form method="post" action="/Table">
+        <input type="submit" value="Next Page" name="action1"/>
+    </form>     -->
+</body>
+</html>

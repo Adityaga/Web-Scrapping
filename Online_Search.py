@@ -2,6 +2,18 @@ from Database import StoreInDatabase
 import Data_fetching_functions
 from bs4 import BeautifulSoup
 import requests
+import re
+
+def varifyCompanyId(CIN)  :
+    #re stands for regular expression and number is denoting type of re
+    re1=r"^[UL][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$"
+    re3=r"^[A-Z]{3}-[0-9]{4}$"
+    re4=r"^F[0-9]{5}$"
+    result=re.match(re1,CIN) or re.match(re3,CIN) or re.match(re4,CIN)
+    if result:
+        return CIN
+    else:
+        return None
 
 def SearchOnline(CIN):
     url='https://www.mca.gov.in/mcafoportal/companyLLPMasterData.do'
