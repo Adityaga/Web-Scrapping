@@ -12,7 +12,6 @@ mongo = PyMongo(app)
 def user():
     if request.method == 'POST':
         CIN=request.form.get("name")
-        # CIN
         if varifyCompanyId(CIN)==False:
             data='Entered ID is invalid'
             return render_template("not_available.html",data=data)
@@ -26,7 +25,7 @@ def user():
             table1=data['Company/LLP Master Data']
             table2=data["Charges"]
             table3=data["Directors/Signatory Details"]
-            return render_template("Table1.html",table1=table1,headings2=table2[0],table2=table2,headings3=table3[0],table3=table3) 
+            return render_template("Table.html",table1=table1,headings2=table2[0],table2=table2,headings3=table3[0],table3=table3) 
     
     return render_template("index.html")
 
