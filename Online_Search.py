@@ -10,7 +10,7 @@ with open('config.json','r') as file_r:
 
 
 def varifyCompanyId(CIN)  :
-    #re stands for regular expression and number is denoting type of re
+    #re stands for regular expression
     re1=r"^[UL][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$"
     re3=r"^[A-Z]{3}-[0-9]{4}$"
     re4=r"^F[0-9]{5}$"
@@ -36,8 +36,8 @@ def SearchOnline(CIN):
     'userEnteredCaptcha': None
     }
     session=requests.session()
-    y=session.post(url=url,data=data,headers=headers)
-    page=y.content
+    response=session.post(url=url,data=data,headers=headers)
+    page=response.content
     soup=BeautifulSoup( page,'lxml')
     table1=Data_fetching_functions.findTable1(soup)
     if table1==None:
